@@ -17,7 +17,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="https://gmpg.org/xfn/11">
 
-	<?php wp_head(); ?>
+<script src="https://use.typekit.net/ibb5tom.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+	<?php
+		wp_head();
+
+		/*	Here's where we add the typography for that specific book.
+		*/
+		if( $post->nb_type ) {
+			echo add_typekit($post->nb_type);			
+		}
+	?>
 </head>
 
 <body <?php body_class(); ?>>

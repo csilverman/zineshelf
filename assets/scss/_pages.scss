@@ -1,0 +1,8 @@
+.side {
+  overflow: hidden;
+  
+  & > .wp-block-group {
+      height: 100%;
+      width: 100%;
+  }
+}

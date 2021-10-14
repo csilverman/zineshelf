@@ -249,10 +249,19 @@ add_filter( 'content_pagination', 'wrap_pages');
 
 function wrap_pages( $pages ) {
 
+	global $post;
+
 	//	make Cover
 	if ( has_post_thumbnail( $post->ID ) ) {
 		$cover_url = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
 	 }
+
+	 $number_of_pages = count( $pages );
+	 $number_of_pages += 2; // add two extra ones for the cover page and end page
+
+	 $number_of_pages = ceil( $number_of_pages / 2 );
+
+	 echo '<style> :root { --pages: ' . $number_of_pages . '; } </style>';
 
 
 	$merged = [];
@@ -278,7 +287,17 @@ function wrap_pages( $pages ) {
 
 	if ($count % 2) $book .= '<div class="side side--back"></div>';
 
-  $merged[] = '<div class="notebook closed">'.$book.'</div>';
+
+	$categories_list = get_the_category_list( esc_html__( ', ', 'zineshelf' ) );
+	$tags_list = get_the_tag_list( '', esc_html_x( ', ', 'list item separator', 'zineshelf' ) );
+
+	$number_of_pages = '<p>Pages: '.count( $pages ).'</p>';
+	$pub_date = '<p>Date: '.get_the_date(  ).'</p>';
+	$intro_page = '<div class="intro">'.get_the_title().$number_of_pages.$pub_date.$categories_list.$tags_list.'</div>';
+
+	$notebook_dimensions = $post->nb_dimensions;
+
+  $merged[] = '<div class="notebook closed size--'.$notebook_dimensions.'">'.$intro_page.$book.'</div>';
 	// return value must be an array
   return $merged;
 }

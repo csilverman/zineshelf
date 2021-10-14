@@ -10,8 +10,9 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
 	<header class="entry-header">
-		<?php
+		<?php /*
 		if ( is_singular() ) :
 			the_title( '<h1 class="entry-title">', '</h1>' );
 		else :
@@ -26,7 +27,8 @@
 				zineshelf_posted_by();
 				?>
 			</div><!-- .entry-meta -->
-		<?php endif; ?>
+		<?php endif; 				*/
+ ?>
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
@@ -59,3 +61,21 @@
 		<?php zineshelf_entry_footer(); ?>
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
+
+
+<fieldset>
+    <legend>View</legend>
+
+<ul class="view-tabs">
+  <li>
+    <input type="radio" id="list-view" name="view" value="list-view" checked>
+    <label for="list-view">List</label>
+  </li>
+
+  <li>
+    <input type="radio" id="book-view" name="view" value="book-view">
+    <label for="book-view">Book</label>
+  </li>
+</ul>
+
+</fieldset>

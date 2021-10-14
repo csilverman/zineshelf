@@ -1,0 +1,55 @@
+/* View controller
+  ================ */
+
+fieldset {
+  border-radius: 0.6rem;
+  border: 2px solid #aaa;
+  padding: 1rem 1.4rem 1.6rem;
+
+  legend {
+    padding: 0 1rem;
+  }
+}
+.view-tabs {
+  padding-left: 0;
+  margin: 0;
+
+  --btn-color: #06f;
+
+  li {
+    list-style: none;
+    padding: 0.4rem;
+  }
+  input {
+    position: absolute;
+    width: 1px;
+    opacity: 0;
+
+    & ~ label {
+      position: relative;
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+
+      &:before {
+        content: "";
+        display: block;
+        //        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        background: #fff;
+        border-radius: 50%;
+        border: 2px solid var(--btn-color);
+        left: 0;
+      }
+    }
+
+    &:checked {
+      & ~ label {
+        &:before {
+          background: radial-gradient(ellipse at center, var(--btn-color) 49%, #fff 52%, #fff 100%);
+        }
+      }
+    }
+  }
+}

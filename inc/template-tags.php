@@ -163,3 +163,12 @@ if ( ! function_exists( 'wp_body_open' ) ) :
 		do_action( 'wp_body_open' );
 	}
 endif;
+
+
+function add_typekit($code) {
+	$type_codes = array(
+    "besley" => '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Besley&display=swap" rel="stylesheet">',
+    "cutive-mono" => '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap" rel="stylesheet">',
+	);
+	return $type_codes[$code];
+}

@@ -1,6 +1,102 @@
+@import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;800&display=swap");
+p {
+  margin-top: 0;
+}
+
+.page p {
+  font-size: 1.6vw;
+}
+
+nav#site-navigation {
+  position: absolute;
+  top: 2em;
+  right: 2em;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.book img {
+  width: 100%;
+  height: auto;
+  display: block;
+  line-height: 0;
+}
+
+.book .cover {
+  top: 0;
+  margin-left: 0.3em;
+  margin-left: 0.61em;
+  right: 0;
+  background: var(--binding-color, #a00);
+  border-bottom: 0.3em solid var(--binding-color, #a00);
+  z-index: 1;
+  transition: 0.4s all ease;
+  transform-origin: top left;
+  position: relative;
+  height: auto;
+  margin-bottom: calc( -1 * 0.3em );
+}
+
+.book:hover .cover {
+  transform: skewY(-6deg) scaleX(0.98);
+}
+
+.book {
+  display: block;
+  background: #ccc;
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 0.61em, #fff 0.61em, #fff 100%), url(https://images.unsplash.com/photo-1621348003842-65f01c0fb21b?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
+  background-size: contain, contain;
+  width: 100%;
+  border-top-left-radius: 0.61em;
+  border-bottom-left-radius: 0.61em;
+  position: relative;
+  box-shadow: 0 0.4em 1.4em #aaa;
+  border-top: none;
+  border-right: none;
+}
+
+.book .pages {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.8rem;
+  background: #aaa;
+  background: repeating-linear-gradient(180deg, #666, #666 1px, #aaa 1px, #aaa 2px);
+  background-size: 1em;
+  border-top-left-radius: 0.61em;
+  border-bottom-left-radius: 0.61em;
+  border: 0.3em solid var(--binding-color, #a00);
+  box-shadow: inset 0.2em -0.1em 0.2em rgba(0, 0, 0, 0.4);
+  border-right: none;
+  border-top-color: transparent;
+}
+.book .pages:before {
+  position: absolute;
+  content: "";
+  top: calc(-1 * 0.3em);
+  left: calc(-1 * 0.3em);
+  border-top-left-radius: 0.61em;
+  width: 0.61em;
+  height: calc(2.8rem / 2);
+  border: 0.3em solid var(--binding-color, #a00);
+  border-right: none;
+  border-bottom: none;
+}
+
 html {
   --scrollbarBG: #CFD8DC;
   --thumbBG: #90A4AE;
+  --page-bg-color: #eee;
+  --page-seam-color: #000;
 }
 
 div::-webkit-scrollbar {
@@ -25,10 +121,13 @@ p:last-child {
   margin-bottom: 0;
 }
 
-:root {
-  --pages: 10;
-}
+/*
+How this should work:
 
+- The page number is the number of individual pages divided by two
+  since a physical "page" has two sides.
+
+*/
 html {
   box-sizing: border-box;
 }
@@ -42,9 +141,8 @@ html {
   transform-style: preserve-3d;
   position: relative;
   width: 80vw;
-  height: 80vh;
-  margin: 3em auto;
-  transition: 1s all ease;
+  height: 40vw;
+  margin: 10em auto 4em auto;
 }
 
 .page {
@@ -67,7 +165,7 @@ html {
 
 .side {
   backface-visibility: hidden;
-  background: #eee;
+  background: var(--page-bg-color);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -81,7 +179,7 @@ html {
   position: absolute;
   width: 33%;
   height: 100%;
-  background: linear-gradient(to right, black 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to right, var(--page-seam-color) 0%, rgba(0, 0, 0, 0) 100%);
   top: 0;
   left: 0;
   opacity: 0.16;
@@ -105,8 +203,6 @@ html {
   overflow: hidden;
 }
 .side--front:before {
-  background: linear-gradient(to right, black 0%, rgba(0, 0, 0, 0) 100%);
-  opacity: 0.6;
   width: 160%;
 }
 .side--back {
@@ -135,7 +231,7 @@ html {
 .notebook:after {
   content: "";
   position: absolute;
-  bottom: calc(-0.08em * var(--pages));
+  bottom: calc(-0.01em * var(--pages));
   left: 0;
   width: 100%;
   height: 1em;
@@ -148,6 +244,7 @@ html {
   transition: 1s all ease;
   opacity: 0;
   background-position: 50%;
+  margin-bottom: -0.5em;
 }
 
 .notebook.open:after {
@@ -157,6 +254,119 @@ html {
   background-position: 100%;
 }
 
-.closed .page {
-  margin-left: 25%;
+.intro {
+  width: 50%;
+  float: left;
+  height: 100%;
+  background: #eee;
+  transition: 1s all ease;
+  font-family: "kettler-web";
+  font-size: 1.3vw;
+  font-weight: bold;
+}
+
+.open .intro {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+.size--landscape {
+  width: 92vw;
+  height: 40vw;
+}
+
+.size--portrait {
+  width: 78vw;
+  height: 46vw;
+}
+
+.page-1 .side.side--front img {
+  width: 100%;
+}
+
+.single-post .entry-content {
+  overflow: hidden;
+}
+
+.home .site-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.side {
+  overflow: hidden;
+}
+.side > .wp-block-group {
+  height: 100%;
+  width: 100%;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background: none;
+}
+
+/* View controller
+  ================ */
+fieldset {
+  border-radius: 0.6rem;
+  border: 2px solid #aaa;
+  padding: 1rem 1.4rem 1.6rem;
+}
+fieldset legend {
+  padding: 0 1rem;
+}
+
+.view-tabs {
+  padding-left: 0;
+  margin: 0;
+  --btn-color: #06f;
+}
+.view-tabs li {
+  list-style: none;
+  padding: 0.4rem;
+}
+.view-tabs input {
+  position: absolute;
+  width: 1px;
+  opacity: 0;
+}
+.view-tabs input ~ label {
+  position: relative;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.view-tabs input ~ label:before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  background: #fff;
+  border-radius: 50%;
+  border: 2px solid var(--btn-color);
+  left: 0;
+}
+.view-tabs input:checked ~ label:before {
+  background: radial-gradient(ellipse at center, var(--btn-color) 49%, #fff 52%, #fff 100%);
+}
+
+body {
+  font-family: Satoshi;
+}
+
+.site-title a {
+  font-weight: 800;
+  font-size: 2rem;
+  color: #000;
+  text-decoration: none;
+  letter-spacing: -0.03em;
+  width: 1rem;
+  display: block;
+  line-height: 0.86;
+  padding: 3rem;
+  position: fixed;
 }

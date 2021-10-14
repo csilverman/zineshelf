@@ -5,6 +5,6 @@ jQuery( ".page" ).click(function() {
     jQuery( ".notebook" ).removeClass( "open" ).addClass( "closed" );
   }
   else {
-    jQuery( ".notebook" ).removeClass( "closed" ).addClass( "open" );    
+    jQuery( ".notebook" ).removeClass( "closed" ).addClass( "open" );
   }
 });

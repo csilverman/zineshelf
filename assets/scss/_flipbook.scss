@@ -1,6 +1,9 @@
 html {
   --scrollbarBG: #CFD8DC;
   --thumbBG: #90A4AE;
+
+  --page-bg-color: #eee;
+  --page-seam-color: #000;
 }
 div::-webkit-scrollbar {
   width: 6px;
@@ -22,9 +25,14 @@ p:last-child {
   margin-bottom: 0;
 }
 
-:root {
-  --pages: 10;
-}
+
+/*
+How this should work:
+
+- The page number is the number of individual pages divided by two
+  since a physical "page" has two sides.
+
+*/
 
 html {
   box-sizing: border-box;
@@ -38,9 +46,9 @@ html {
   transform-style: preserve-3d;
   position: relative;
   width: 80vw;
-  height: 80vh;
-  margin: 3em auto;
-  transition: 1s all ease;
+  height: 40vw;
+  margin: 10em auto 4em auto;
+//  transition: 1s all ease;
 }
 
 .page {
@@ -67,7 +75,7 @@ html {
 }
 .side {
   backface-visibility: hidden;
-  background: #eee;
+  background: var(--page-bg-color);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -82,7 +90,7 @@ html {
     position: absolute;
     width: 33%;
     height: 100%;
-      background: linear-gradient(to right,  rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+      background: linear-gradient(to right, var(--page-seam-color) 0%,rgba(0,0,0,0) 100%);
     top: 0;
     left: 0;
     opacity: 0.16;
@@ -108,8 +116,8 @@ html {
     overflow: hidden;
 
     &:before {
-      background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
-      opacity: 0.6;
+//      background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+//      opacity: 0.6;
       width: 160%;
     }
   }
@@ -136,21 +144,22 @@ html {
   z-index: 1;
 }
 .notebook:after {
-    content: "";
-    position: absolute;
-    bottom: calc(-0.08em * var(--pages));
+  content: "";
+  position: absolute;
+  bottom: calc(-0.01em * var(--pages));
   left: 0;
-    width: 100%;
-    height: 1em;
-    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
-    border-radius: 50%;
-    z-index: -1;
-    background-size: 100%;
-    filter: blur(4px);
+  width: 100%;
+  height: 1em;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
+  border-radius: 50%;
+  z-index: -1;
+  background-size: 100%;
+  filter: blur(4px);
   clip-path: inset(50% 0 -50% 0);
   transition: 1s all ease;
   opacity: 0;
   background-position: 50%;
+  margin-bottom: -0.5em;
 }
 .notebook.open:after {
     height: 1em;
@@ -164,6 +173,42 @@ html {
 //  width: 40vw;
 
   .page {
-    margin-left: 25%;
+//    margin-left: 25%;
   }
+}
+
+
+
+
+
+.intro {
+    width: 50%;
+    float: left;
+    height: 100%;
+    background: #eee;
+    transition: 1s all ease;
+
+    font-family: "kettler-web";
+    font-size: 1.3vw;
+    font-weight: bold;
+}
+.open {
+  .intro {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+
+.size--landscape {
+  width: 92vw;
+  height: 40vw;
+}
+.size--portrait {
+  width: 78vw;
+  height: 46vw;
+}
+
+.page-1 .side.side--front img {
+    width: 100%;
 }
