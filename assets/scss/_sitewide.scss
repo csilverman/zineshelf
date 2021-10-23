@@ -1,10 +1,22 @@
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
 p {
   margin-top: 0;
 }
-.page {
+.book-page {
   p {
     font-size: 1.6vw;
   }
+}
+
+img {
+  height: auto;
 }
 
 nav#site-navigation {

@@ -1,7 +1,22 @@
+
 .site-title {
+
   a {
     font-weight: 800;
     font-size: 2rem;
+
+    .home & {
+      font-size: 4rem;
+
+      //  scheme 1
+      color: #00a;
+      --shad: #0cf;
+
+      //  scheme 2
+      color: #f30;
+      --shad: #fb8;
+    }
+
     color: #000;
     text-decoration: none;
     letter-spacing: -0.03em;
@@ -10,5 +25,16 @@
     line-height: 0.86;
     padding: 3rem;
     position: fixed;
+    @include shadowblock(#aaa, 4);
+
+    transition: 0.4s all ease;
+
+    &:hover {
+      text-shadow: none;
+      color: #aaa;
+//      @include shadowblock(#aaa, 2);
+      transform: translate(4px, 4px);
+    }
+
   }
 }

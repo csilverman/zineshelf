@@ -33,14 +33,6 @@ How this should work:
   since a physical "page" has two sides.
 
 */
-
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 .notebook {
   transform: perspective(100em);
   transform-style: preserve-3d;
@@ -50,10 +42,10 @@ html {
   margin: 10em auto 4em auto;
 //  transition: 1s all ease;
 }
+$page-thickness: 0.03em;
 
-.page {
+.book-page {
 
-  $page-thickness: 0.03em;
 
   width: 50%;
   height: 100%;
@@ -68,7 +60,12 @@ html {
     transform: rotateY(180deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (#{$page-thickness} * (var(--pages) - var(--h)))) );
   }
 }
-.page:nth-child(2n+2) {
+
+.the-end {
+  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(#{$page-thickness} * var(--h)));
+}
+
+.book-page:nth-child(2n+2) {
   .side {
     border-color: rgba(0,0,0,0.2);
   }
@@ -140,7 +137,7 @@ html {
     opacity: 0;
   width: 0;
 }
-.page {
+.book-page {
   z-index: 1;
 }
 .notebook:after {
@@ -208,7 +205,11 @@ html {
   width: 78vw;
   height: 46vw;
 }
+.size--horiz-photo {
+  width: 92vw;
+  height: 34vw;
+}
 
-.page-1 .side.side--front img {
+.book-page-1 .side.side--front img {
     width: 100%;
 }

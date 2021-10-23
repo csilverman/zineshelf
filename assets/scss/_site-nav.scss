@@ -1,0 +1,14 @@
+.menu-toggle {
+  display: none;
+}
+.nav-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  .page_item {
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1.2em;
+  }
+}

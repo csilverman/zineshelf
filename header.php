@@ -26,12 +26,17 @@
 		/*	Here's where we add the typography for that specific book.
 		*/
 		if( $post->nb_type ) {
-			echo add_typekit($post->nb_type);			
+			echo add_typekit($post->nb_type);
 		}
 	?>
 </head>
 
-<body <?php body_class(); ?>>
+<?php
+$page_classes = '';
+if( is_singular() ) $page_classes .= 'is-singular';
+?>
+
+<body <?php body_class( $page_classes ); ?>>
 <?php wp_body_open(); ?>
 <div id="page" class="site">
 	<a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'zineshelf' ); ?></a>

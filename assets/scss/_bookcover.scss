@@ -7,9 +7,9 @@ html {
   box-sizing: inherit;
 }
 
-$radius: 0.61em;
-$cover-thickness: 0.3em;
-$pages-height: 2.8rem;
+$radius: var(--radius, 0.61em);
+$cover-thickness: var(--cover-thickness ,0.3em);
+$book-thickness: var(--book-thickness, 2rem);
 $book-width: 100%;
 $book-height: auto;
 $binding-color: var(--binding-color, #a00);
@@ -26,7 +26,7 @@ $binding-color: var(--binding-color, #a00);
   margin-left: $cover-thickness;
   margin-left: $radius;
   //  margin-left: 0;
-  //  height: calc((100% - #{$pages-height}) + #{0.4em});
+  //  height: calc((100% - #{$book-thickness}) + #{0.4em});
   right: 0;
   background: $binding-color;
   border-bottom: $cover-thickness solid $binding-color;
@@ -78,8 +78,8 @@ $binding-color: var(--binding-color, #a00);
   bottom: 0;
   left: 0;
   width: 100%;
-  //  height: calc(#{$pages-height} - #{$radius});
-  height: $pages-height;
+  //  height: calc(#{$book-thickness} - #{$radius});
+  height: $book-thickness;
   background: #aaa;
 
   background: repeating-linear-gradient(
@@ -105,7 +105,7 @@ $binding-color: var(--binding-color, #a00);
     left: calc(-1 * #{$cover-thickness});
     border-top-left-radius: $radius;
     width: $radius;
-    height: calc(#{$pages-height} / 2);
+    height: calc(#{$book-thickness} / 2);
     border: $cover-thickness solid $binding-color;
     border-right: none;
     border-bottom: none;

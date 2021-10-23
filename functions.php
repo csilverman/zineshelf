@@ -261,9 +261,6 @@ function wrap_pages( $pages ) {
 
 	 $number_of_pages = ceil( $number_of_pages / 2 );
 
-	 echo '<style> :root { --pages: ' . $number_of_pages . '; } </style>';
-
-
 	$merged = [];
    // Nothing to do without content pagination
   if( count( $pages ) <= 1 )
@@ -271,12 +268,15 @@ function wrap_pages( $pages ) {
   // Number of pages per chunk
 
 	$count = 1;
-	$book = '<div class="page page-1" style="--h: 1"><div class="side side--front"><img src="'.$cover_url[0].'" /></div>';
+	$book = '<style> :root { --pages: ' . $number_of_pages . '; } </style><div class="book-page book-page-1" style="--h: 1"><div class="side side--front"><img src="'.$cover_url[0].'" /></div>';
+
+	$page_number = 2;
 
   foreach( (array) $pages as $page ) {
 		if ($count % 2) {
 				$book .= '<div class="side side--back">'.$page.'</div>';
-				$book .= '</div><div class="page page-'.($count+1).'" style="--h: '.($count+1).'">';
+				$book .= '</div><div class="book-page book-page-'.($page_number).'" style="--h: '.($page_number).'">';
+				$page_number++;
 		}
 		else {
 			$book .= '<div class="side side--front">'.$page.'</div>';
@@ -294,10 +294,10 @@ function wrap_pages( $pages ) {
 	$number_of_pages = '<p>Pages: '.count( $pages ).'</p>';
 	$pub_date = '<p>Date: '.get_the_date(  ).'</p>';
 	$intro_page = '<div class="intro">'.get_the_title().$number_of_pages.$pub_date.$categories_list.$tags_list.'</div>';
-
+	$close_page = '<div class="the-end" style="--h: '.($count).'"><p>Le Fin</p></div>';
 	$notebook_dimensions = $post->nb_dimensions;
 
-  $merged[] = '<div class="notebook closed size--'.$notebook_dimensions.'">'.$intro_page.$book.'</div>';
+  $merged[] = '<div class="notebook closed size--'.$notebook_dimensions.'">'.$intro_page.$book.'</div>'.$close_page;
 	// return value must be an array
   return $merged;
 }

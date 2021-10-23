@@ -1,10 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;800&display=swap");
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 p {
   margin-top: 0;
 }
 
-.page p {
+.book-page p {
   font-size: 1.6vw;
+}
+
+img {
+  height: auto;
 }
 
 nav#site-navigation {
@@ -32,17 +44,17 @@ html {
 
 .book .cover {
   top: 0;
-  margin-left: 0.3em;
-  margin-left: 0.61em;
+  margin-left: var(--cover-thickness, 0.3em);
+  margin-left: var(--radius, 0.61em);
   right: 0;
   background: var(--binding-color, #a00);
-  border-bottom: 0.3em solid var(--binding-color, #a00);
+  border-bottom: var(--cover-thickness, 0.3em) solid var(--binding-color, #a00);
   z-index: 1;
   transition: 0.4s all ease;
   transform-origin: top left;
   position: relative;
   height: auto;
-  margin-bottom: calc( -1 * 0.3em );
+  margin-bottom: calc( -1 * var(--cover-thickness, 0.3em) );
 }
 
 .book:hover .cover {
@@ -52,11 +64,11 @@ html {
 .book {
   display: block;
   background: #ccc;
-  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) 0.61em, #fff 0.61em, #fff 100%), url(https://images.unsplash.com/photo-1621348003842-65f01c0fb21b?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
+  background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.2) var(--radius, 0.61em), #fff var(--radius, 0.61em), #fff 100%), url(https://images.unsplash.com/photo-1621348003842-65f01c0fb21b?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=60);
   background-size: contain, contain;
   width: 100%;
-  border-top-left-radius: 0.61em;
-  border-bottom-left-radius: 0.61em;
+  border-top-left-radius: var(--radius, 0.61em);
+  border-bottom-left-radius: var(--radius, 0.61em);
   position: relative;
   box-shadow: 0 0.4em 1.4em #aaa;
   border-top: none;
@@ -68,13 +80,13 @@ html {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 2.8rem;
+  height: var(--book-thickness, 2rem);
   background: #aaa;
   background: repeating-linear-gradient(180deg, #666, #666 1px, #aaa 1px, #aaa 2px);
   background-size: 1em;
-  border-top-left-radius: 0.61em;
-  border-bottom-left-radius: 0.61em;
-  border: 0.3em solid var(--binding-color, #a00);
+  border-top-left-radius: var(--radius, 0.61em);
+  border-bottom-left-radius: var(--radius, 0.61em);
+  border: var(--cover-thickness, 0.3em) solid var(--binding-color, #a00);
   box-shadow: inset 0.2em -0.1em 0.2em rgba(0, 0, 0, 0.4);
   border-right: none;
   border-top-color: transparent;
@@ -82,12 +94,12 @@ html {
 .book .pages:before {
   position: absolute;
   content: "";
-  top: calc(-1 * 0.3em);
-  left: calc(-1 * 0.3em);
-  border-top-left-radius: 0.61em;
-  width: 0.61em;
-  height: calc(2.8rem / 2);
-  border: 0.3em solid var(--binding-color, #a00);
+  top: calc(-1 * var(--cover-thickness, 0.3em));
+  left: calc(-1 * var(--cover-thickness, 0.3em));
+  border-top-left-radius: var(--radius, 0.61em);
+  width: var(--radius, 0.61em);
+  height: calc(var(--book-thickness, 2rem) / 2);
+  border: var(--cover-thickness, 0.3em) solid var(--binding-color, #a00);
   border-right: none;
   border-bottom: none;
 }
@@ -128,14 +140,6 @@ How this should work:
   since a physical "page" has two sides.
 
 */
-html {
-  box-sizing: border-box;
-}
-
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
 .notebook {
   transform: perspective(100em);
   transform-style: preserve-3d;
@@ -145,7 +149,7 @@ html {
   margin: 10em auto 4em auto;
 }
 
-.page {
+.book-page {
   width: 50%;
   height: 100%;
   transform-style: preserve-3d;
@@ -155,11 +159,15 @@ html {
   margin-left: 50%;
   transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
 }
-.page.flip {
+.book-page.flip {
   transform: rotateY(180deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
 }
 
-.page:nth-child(2n+2) .side {
+.the-end {
+  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+}
+
+.book-page:nth-child(2n+2) .side {
   border-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -224,7 +232,7 @@ html {
   width: 0;
 }
 
-.page {
+.book-page {
   z-index: 1;
 }
 
@@ -280,7 +288,12 @@ html {
   height: 46vw;
 }
 
-.page-1 .side.side--front img {
+.size--horiz-photo {
+  width: 92vw;
+  height: 34vw;
+}
+
+.book-page-1 .side.side--front img {
   width: 100%;
 }
 
@@ -288,9 +301,17 @@ html {
   overflow: hidden;
 }
 
-.home .site-main {
+body:not(.is-singular) .site-main {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 4vw;
+  padding: 14em 4vw 2em 4vw;
+}
+body:not(.is-singular) .site-main .book--portrait {
+  width: 80%;
+}
+body:not(.is-singular) .site-main .book--square {
+  width: 90%;
 }
 
 .side {
@@ -307,6 +328,15 @@ html {
   flex-direction: column;
   justify-content: center;
   background: none;
+}
+
+.the-end {
+  width: 50%;
+  float: right;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 }
 
 /* View controller
@@ -358,6 +388,51 @@ body {
   font-family: Satoshi;
 }
 
+.entry-title {
+  color: #222;
+  font-weight: 800;
+  font-size: calc(1.625rem + 4.5vw);
+  letter-spacing: -0.04em;
+  text-shadow: 1px 1px 0 var(--shad, #aaa), 2px 2px 0 var(--shad, #aaa), 3px 3px 0 var(--shad, #aaa), 4px 4px 0 var(--shad, #aaa), 5px 5px 0 var(--shad, #aaa), 6px 6px 0 var(--shad, #aaa);
+  margin-top: 0;
+}
+@media (min-width: 1200px) {
+  .entry-title {
+    font-size: 5rem;
+  }
+}
+
+.has-large-font-size {
+  font-size: calc(1.325rem + 0.9vw);
+  line-height: 1.2;
+}
+@media (min-width: 1200px) {
+  .has-large-font-size {
+    font-size: 2rem;
+  }
+}
+
+.menu-toggle {
+  display: none;
+}
+
+.nav-menu {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.nav-menu .page_item {
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.page .site-main {
+  max-width: 48em;
+  margin: 0 auto;
+  padding-top: 10em;
+}
+
 .site-title a {
   font-weight: 800;
   font-size: 2rem;
@@ -369,4 +444,18 @@ body {
   line-height: 0.86;
   padding: 3rem;
   position: fixed;
+  text-shadow: 1px 1px 0 var(--shad, #aaa), 2px 2px 0 var(--shad, #aaa), 3px 3px 0 var(--shad, #aaa), 4px 4px 0 var(--shad, #aaa);
+  transition: 0.4s all ease;
+}
+.home .site-title a {
+  font-size: 4rem;
+  color: #00a;
+  --shad: #0cf;
+  color: #f30;
+  --shad: #fb8;
+}
+.site-title a:hover {
+  text-shadow: none;
+  color: #aaa;
+  transform: translate(4px, 4px);
 }

@@ -1,7 +1,7 @@
-jQuery( ".page" ).click(function() {
+jQuery( ".book-page" ).click(function() {
   jQuery( this ).toggleClass( "flip" )
 
-  if( !jQuery( ".page-1" ).hasClass( "flip" ) ) {
+  if( !jQuery( ".book-page-1" ).hasClass( "flip" ) ) {
     jQuery( ".notebook" ).removeClass( "open" ).addClass( "closed" );
   }
   else {
