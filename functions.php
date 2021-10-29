@@ -279,7 +279,14 @@ function wrap_pages( $pages ) {
 				$page_number++;
 		}
 		else {
-			$book .= '<div class="side side--front">'.$page.'</div>';
+			$book .= '<div class="side side--front"><b class="shine"></b>'.$page.'</div>';
+			/*
+				.shine is the result of a very strange bug I discovered where, if the .shine
+				element is a direct child of book-page and has both z-index:1 and mix-blend-mode:overlay,
+				it throws off the page stacking so the first page in the book sits on top of all
+				the other ones.
+
+			*/
 		}
 		$count++;
 
@@ -310,3 +317,13 @@ function add_typekit($code) {
 	);
 	return $type_codes[$code].$code;
 }
+
+// [bartag foo="foo-value"]
+function bartag_func( $atts ) {
+	$a = shortcode_atts( array(
+		'foo' => 'something',
+	), $atts );
+
+	return "foo = {$a['foo']}";
+}
+add_shortcode( 'bartag', 'bartag_func' );

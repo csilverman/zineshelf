@@ -18,6 +18,9 @@
 }
 
 .wp-block-group__inner-container {
+  .content-narrow & {
+    width: 70%;
+  }
   .size--portrait .content-narrow & {
     width: 70%;
   }
