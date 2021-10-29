@@ -62,6 +62,10 @@
 	</footer><!-- .entry-footer -->
 </article><!-- #post-<?php the_ID(); ?> -->
 
+<div id="bookpage-nav">
+	<button class="prev">Prev</button>
+<button class="next">Next</button>
+</div>
 
 <fieldset>
     <legend>View</legend>

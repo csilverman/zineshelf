@@ -51,14 +51,16 @@ html {
   border-bottom: var(--cover-thickness, 0.3em) solid var(--binding-color, #a00);
   z-index: 1;
   transition: 0.4s all ease;
-  transform-origin: top left;
+  -webkit-transform-origin: top left;
+          transform-origin: top left;
   position: relative;
   height: auto;
   margin-bottom: calc( -1 * var(--cover-thickness, 0.3em) );
 }
 
 .book:hover .cover {
-  transform: skewY(-6deg) scaleX(0.98);
+  -webkit-transform: skewY(-6deg) scaleX(0.98);
+          transform: skewY(-6deg) scaleX(0.98);
 }
 
 .book {
@@ -126,7 +128,7 @@ div::-webkit-scrollbar-track {
 
 div::-webkit-scrollbar-thumb {
   background-color: transparent;
-  border-left: 3px solid #06c;
+  border-left: 3px solid var(--scrollbarBG, #06c);
 }
 
 p:last-child {
@@ -141,8 +143,10 @@ How this should work:
 
 */
 .notebook {
-  transform: perspective(100em);
-  transform-style: preserve-3d;
+  -webkit-transform: perspective(100em);
+          transform: perspective(100em);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
   position: relative;
   width: 80vw;
   height: 40vw;
@@ -152,19 +156,24 @@ How this should work:
 .book-page {
   width: 50%;
   height: 100%;
-  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
   position: absolute;
   transition: 1s all ease;
-  transform-origin: left;
+  -webkit-transform-origin: left;
+          transform-origin: left;
   margin-left: 50%;
-  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+  -webkit-transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+          transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
 }
 .book-page.flip {
-  transform: rotateY(180deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
+  -webkit-transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
+          transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
 }
 
 .the-end {
-  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+  -webkit-transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+          transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
 }
 
 .book-page:nth-child(2n+2) .side {
@@ -172,7 +181,8 @@ How this should work:
 }
 
 .side {
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
   background: var(--page-bg-color);
   position: absolute;
   width: 100%;
@@ -180,7 +190,8 @@ How this should work:
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.4);
   top: 0;
   left: 0;
-  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 }
 .side:after {
   content: "";
@@ -196,7 +207,8 @@ How this should work:
   left: auto;
   right: 0;
   opacity: 0.2;
-  transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
 .side:before {
   position: absolute;
@@ -214,7 +226,8 @@ How this should work:
   width: 160%;
 }
 .side--back {
-  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
   background: #eee;
 }
 
@@ -247,8 +260,10 @@ How this should work:
   border-radius: 50%;
   z-index: -1;
   background-size: 100%;
-  filter: blur(4px);
-  clip-path: inset(50% 0 -50% 0);
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+  -webkit-clip-path: inset(50% 0 -50% 0);
+          clip-path: inset(50% 0 -50% 0);
   transition: 1s all ease;
   opacity: 0;
   background-position: 50%;
@@ -275,7 +290,8 @@ How this should work:
 
 .open .intro {
   opacity: 0;
-  transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
 }
 
 .size--landscape {
@@ -293,8 +309,24 @@ How this should work:
   height: 34vw;
 }
 
+.size--vert-photo {
+  width: 71vw;
+  height: 47vw;
+}
+
 .book-page-1 .side.side--front img {
   width: 100%;
+}
+
+button.prev {
+  position: fixed;
+  top: 50%;
+}
+
+button.next {
+  position: fixed;
+  top: 50%;
+  right: 0;
 }
 
 .single-post .entry-content {
@@ -306,6 +338,13 @@ body:not(.is-singular) .site-main {
   grid-template-columns: 1fr 1fr 1fr;
   gap: 4vw;
   padding: 14em 4vw 2em 4vw;
+  -webkit-justify-content: space-evenly;
+          justify-content: space-evenly;
+  justify-items: center;
+  -webkit-align-content: space-evenly;
+          align-content: space-evenly;
+  -webkit-align-items: center;
+          align-items: center;
 }
 body:not(.is-singular) .site-main .book--portrait {
   width: 80%;
@@ -323,10 +362,14 @@ body:not(.is-singular) .site-main .book--square {
 }
 
 .intro {
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  -webkit-justify-content: center;
+          justify-content: center;
   background: none;
 }
 
@@ -334,9 +377,12 @@ body:not(.is-singular) .site-main .book--square {
   width: 50%;
   float: right;
   height: 100%;
+  display: -webkit-flex;
   display: flex;
-  align-content: center;
-  justify-content: center;
+  -webkit-align-content: center;
+          align-content: center;
+  -webkit-justify-content: center;
+          justify-content: center;
 }
 
 /* View controller
@@ -366,9 +412,11 @@ fieldset legend {
 }
 .view-tabs input ~ label {
   position: relative;
+  display: -webkit-flex;
   display: flex;
   gap: 0.6rem;
-  align-items: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .view-tabs input ~ label:before {
   content: "";
@@ -410,6 +458,34 @@ body {
   .has-large-font-size {
     font-size: 2rem;
   }
+}
+
+.p-1 {
+  padding: 1vw;
+}
+
+.p-2 {
+  padding: 2vw;
+}
+
+.p-3 {
+  padding: 3vw;
+}
+
+.p-4 {
+  padding: 4vw;
+}
+
+.p-5 {
+  padding: 5vw;
+}
+
+.p-6 {
+  padding: 6vw;
+}
+
+.size--portrait .content-narrow .wp-block-group__inner-container {
+  width: 70%;
 }
 
 .menu-toggle {
@@ -457,5 +533,6 @@ body {
 .site-title a:hover {
   text-shadow: none;
   color: #aaa;
-  transform: translate(4px, 4px);
+  -webkit-transform: translate(4px, 4px);
+          transform: translate(4px, 4px);
 }

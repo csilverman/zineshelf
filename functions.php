@@ -301,3 +301,12 @@ function wrap_pages( $pages ) {
 	// return value must be an array
   return $merged;
 }
+
+
+function add_typekit($code) {
+	$type_codes = array(
+    "besley" => "<style> @import url('https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,800;1,400;1,800&display=swap'); </style>",
+    "cutive-mono" => "<style> @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap'); </style>"
+	);
+	return $type_codes[$code].$code;
+}

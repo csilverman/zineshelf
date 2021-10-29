@@ -1,0 +1,9 @@
+.book-page {
+  --monospace: "cutive mono";
+
+  p {
+    font-family: var(--monospace);
+    font-size: 1.3vw;
+    letter-spacing: -0.04em;
+  }
+}

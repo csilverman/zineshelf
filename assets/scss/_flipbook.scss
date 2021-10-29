@@ -18,7 +18,7 @@ div::-webkit-scrollbar-track {
 div::-webkit-scrollbar-thumb {
   background-color: transparent;
 //  border-radius: 6px;
-  border-left: 3px solid #06c;
+  border-left: 3px solid var(--scrollbarBG, #06c);
 }
 
 p:last-child {
@@ -57,8 +57,11 @@ $page-thickness: 0.03em;
   transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(#{$page-thickness} * var(--h)));
 
   &.flip {
-    transform: rotateY(180deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (#{$page-thickness} * (var(--pages) - var(--h)))) );
+    transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (#{$page-thickness} * (var(--pages) - var(--h)))) );
   }
+  // -179.9?? Well...
+  // https://stackoverflow.com/questions/35186768/safari-css-bug-animation-rotation-direction-incorrect
+
 }
 
 .the-end {
@@ -209,7 +212,22 @@ $page-thickness: 0.03em;
   width: 92vw;
   height: 34vw;
 }
+.size--vert-photo {
+  width: 71vw;
+  height: 47vw;
+}
 
 .book-page-1 .side.side--front img {
     width: 100%;
+}
+
+
+button.prev {
+  position: fixed;
+  top: 50%;
+}
+button.next {
+  position: fixed;
+  top: 50%;
+  right: 0;
 }

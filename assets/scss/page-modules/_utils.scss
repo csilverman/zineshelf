@@ -1,0 +1,24 @@
+.p-1 {
+  padding: 1vw;
+}
+.p-2 {
+  padding: 2vw;
+}
+.p-3 {
+  padding: 3vw;
+}
+.p-4 {
+  padding: 4vw;
+}
+.p-5 {
+  padding: 5vw;
+}
+.p-6 {
+  padding: 6vw;
+}
+
+.wp-block-group__inner-container {
+  .size--portrait .content-narrow & {
+    width: 70%;
+  }
+}

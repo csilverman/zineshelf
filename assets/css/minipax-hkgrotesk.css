@@ -1,0 +1,10 @@
+.book-page p {
+  font-family: Minipax-Medium;
+  font-size: 1.3vw;
+}
+.book-page h2 {
+  margin: 0;
+  margin-bottom: 8vw;
+  font-family: "HK Grotesk";
+  font-size: 3vw;
+}
