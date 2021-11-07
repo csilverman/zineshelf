@@ -30,14 +30,52 @@ jQuery( "button.prev" ).click(function() {
   flipPrev();
 });
 
+
+function applyView( view ) {
+  if ( view == 'book-view' )
+    jQuery( "body" ).removeClass( "list-view" ).addClass( "book-view" );
+  else  if ( view == 'list-view' )
+    jQuery( "body" ).removeClass( "book-view" ).addClass( "list-view" );
+
+  jQuery( '#' + view ).prop('checked', true);
+}
+
+jQuery( "#list-view" ).click(function() {
+    applyView( "list-view" );
+    Cookies.set('view', 'list-view', { path: '/' });
+});
+jQuery( "#book-view" ).click(function() {
+    applyView( "book-view" );
+    Cookies.set('view', 'book-view', { path: '/' });
+});
+
+
+
 jQuery(document).keydown(
   function(e)
   {
     if (e.keyCode == 39) {
+      if( !jQuery( ".book-page-1" ).hasClass( "flip" ) ) {
+        jQuery( ".notebook" ).removeClass( "closed" ).addClass( "open" );
+      }
+
       flipNext();
     }
     if (e.keyCode == 37) {
+      if( jQuery( ".flip" ).length == 1 ) {
+        jQuery( ".notebook" ).removeClass( "open" ).addClass( "closed" );
+      }
+
       flipPrev();
     }
   }
 );
+
+
+jQuery( document ).ready(function() {
+  // Cookies.remove('view', { path: '/' });
+
+  let the_view = Cookies.get('view');
+//  alert( the_view );
+  applyView( the_view );
+});

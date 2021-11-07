@@ -31,6 +31,28 @@
  ?>
 	</header><!-- .entry-header -->
 
+	<details class="view-controls">
+	    <summary>View books as</summary>
+			<ul>
+				<li>
+			    <input type="radio" id="book-view" name="view" value="book-view" checked>
+			    <label for="book-view">Book (prettier)</label>
+			  </li>
+			  <li>
+			    <input type="radio" id="list-view" name="view" value="list-view">
+			    <label for="list-view">List (better on small screens)</label>
+			  </li>
+			</ul>
+
+<?php /*
+			<p>
+				<input type="checkbox" id="all-books" name="all-books" value="all-books">
+				<label for="all-books">View all books this way</label>
+			</p>
+*/ ?>
+
+	</details>
+
 	<div class="entry-content">
 		<?php
 		the_content(
@@ -66,20 +88,3 @@
 	<button class="prev">Prev</button>
 <button class="next">Next</button>
 </div>
-
-<fieldset>
-    <legend>View</legend>
-
-<ul class="view-tabs">
-  <li>
-    <input type="radio" id="list-view" name="view" value="list-view" checked>
-    <label for="list-view">List</label>
-  </li>
-
-  <li>
-    <input type="radio" id="book-view" name="view" value="book-view">
-    <label for="book-view">Book</label>
-  </li>
-</ul>
-
-</fieldset>

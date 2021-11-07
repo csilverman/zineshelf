@@ -1,0 +1,24 @@
+@mixin shadowblock($color, $depth, $type: 'text') {
+  $shadow: null;
+  $comma: ', ';
+  @for $i from 1 through $depth {
+    @if $i == $depth {
+      $comma: '';
+    }
+    $shadow: $shadow + #{$i}px #{$i}px 0 var(--shad, $color) + unquote($comma);
+  }
+//  1px 1px 0 #f00, 2px 2px 0 #f00
+  #{$type}-shadow: $shadow;
+}
+
+@mixin jagged-bg($color1, $color2, $size, $place: top) {
+  @if $place == top {
+    background: conic-gradient(#{$color1} 45deg, #{$color2} 45deg 315deg, #{$color1} 200deg);
+  }
+  @else {
+    background: conic-gradient(#{$color2} 135deg, #{$color1} 135deg 180deg, #{$color1} 180deg 225deg, #{$color2} 225deg);
+  }
+  background-size: $size;
+  background-repeat: repeat-x;
+  height: $size;
+}

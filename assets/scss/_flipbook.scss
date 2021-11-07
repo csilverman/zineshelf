@@ -5,259 +5,297 @@ html {
   --page-bg-color: #eee;
   --page-seam-color: #000;
 }
-div::-webkit-scrollbar {
-  width: 6px;
-}
-div {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-div::-webkit-scrollbar-track {
-  background: transparent;
-}
-div::-webkit-scrollbar-thumb {
-  background-color: transparent;
-//  border-radius: 6px;
-  border-left: 3px solid var(--scrollbarBG, #06c);
-}
+.book-view {
 
-p:last-child {
-  margin-bottom: 0;
-}
+  /*
+  How this should work:
+
+  - The page number is the number of individual pages divided by two
+    since a physical "page" has two sides.
+
+  */
+  .notebook {
+    transform: perspective(100em);
+    transform-style: preserve-3d;
+    position: relative;
+    width: 80vw;
+    height: 40vw;
+    margin: 0 auto 4em auto;
 
 
-/*
-How this should work:
+    div::-webkit-scrollbar {
+      width: 6px;
+    }
+    div {
+      scrollbar-width: thin;
+      scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+    }
+    div::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    div::-webkit-scrollbar-thumb {
+      background-color: transparent;
+    //  border-radius: 6px;
+      border-left: 3px solid var(--scrollbarBG, #06c);
+    }
 
-- The page number is the number of individual pages divided by two
-  since a physical "page" has two sides.
+    p:last-child {
+      margin-bottom: 0;
+    }
 
-*/
-.notebook {
-  transform: perspective(100em);
-  transform-style: preserve-3d;
-  position: relative;
-  width: 80vw;
-  height: 40vw;
-  margin: 10em auto 4em auto;
-//  transition: 1s all ease;
-}
-$page-thickness: 0.03em;
-
-.book-page {
-
-
-  width: 50%;
-  height: 100%;
-  transform-style: preserve-3d;
-  position: absolute;
-  transition: 1s all ease;
-  transform-origin: left;
-  margin-left: 50%;
-  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(#{$page-thickness} * var(--h)));
-
-  &.flip {
-    transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (#{$page-thickness} * (var(--pages) - var(--h)))) );
   }
-  // -179.9?? Well...
-  // https://stackoverflow.com/questions/35186768/safari-css-bug-animation-rotation-direction-incorrect
+  $page-thickness: 0.03em;
 
-}
-
-.the-end {
-  transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(#{$page-thickness} * var(--h)));
-}
-
-.book-page:nth-child(2n+2) {
-  .side {
-    border-color: rgba(0,0,0,0.2);
-  }
-}
-.side {
-  backface-visibility: hidden;
-  background: var(--page-bg-color);
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-bottom: 0.5px solid rgba(0,0,0,0.4);
-  top: 0;
-  left: 0;
-  transform-style: preserve-3d;
-
-  &:after {
-    //  the page seam
-    content: '';
-    position: absolute;
-    width: 4%;
+  .book-page {
+    width: 50%;
     height: 100%;
-      background: linear-gradient(to right, var(--page-seam-color) 0%,rgba(0,0,0,0) 100%);
-    top: 0;
-    left: 0;
-    opacity: 1;
+    transform-style: preserve-3d;
+    position: absolute;
+    transition: 1s all ease;
+    transform-origin: left;
+    margin-left: 50%;
+    transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(#{$page-thickness} * var(--h)));
+
+    &.flip {
+      transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (#{$page-thickness} * (var(--pages) - var(--h)))) );
+    }
+    // -179.9?? Well...
+    // https://stackoverflow.com/questions/35186768/safari-css-bug-animation-rotation-direction-incorrect
+
   }
-  &--back {
-    &:after {
-      left: auto;
-      right: 0;
-      opacity: 1;
-      transform: scaleX(-1);
+
+  .the-end {
+    transform: translateZ(calc(-0.01em * (var(--pages) - 1))) translateY(calc(#{$page-thickness} * var(--pages)));
+  }
+
+  .book-page:nth-child(2n+2) {
+    .side {
+      border-color: #444;
     }
   }
-  &:before {
+  .side {
+    backface-visibility: hidden;
+    background: var(--page-bg-color);
     position: absolute;
     width: 100%;
     height: 100%;
-    content: '';
-    background: linear-gradient(to right, var(--page-seam-color) 0%, rgba(0, 0, 0, 0) 100%);
-    opacity: 0;
-  transition: 1s all ease;
-  }
-  &--front {
-    overflow: hidden;
+    border-bottom: 0.5px solid #888;
+    top: 0;
+    left: 0;
+    transform-style: preserve-3d;
 
-    &:before {
-//      background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
-      opacity: 0.6;
-      width: 160%;
+    &:after {
+      //  the page seam
+      content: '';
+      position: absolute;
+      width: 2%;
+      height: 100%;
+        background: linear-gradient(to right, var(--page-seam-color) 0%,rgba(0,0,0,0) 100%);
+      top: 0;
+      left: 0;
+      opacity: 1;
     }
-  }
-  &--back {
-    transform: rotateY(180deg);
-    background: #eee;
-  }
-}
-
-.book-page-1 {
-  .side--front {
+    &--back {
+      &:after {
+        left: auto;
+        right: 0;
+        opacity: 1;
+        transform: scaleX(-1);
+      }
+    }
     &:before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      content: '';
+      background: linear-gradient(to right, var(--page-seam-color) 0%, rgba(0, 0, 0, 0) 100%);
       opacity: 0;
+    transition: 1s all ease;
+    }
+    &--front {
+      overflow: hidden;
+
+      &:before {
+  //      background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+        opacity: 0.6;
+        width: 160%;
+      }
+    }
+    &--back {
+      transform: rotateY(180deg);
+      background: #eee;
     }
   }
-}
 
-.text-content {
-  height: 100%;
-  padding: 8%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  position: relative;
-  z-index: 10;
-}
+  .book-page-1 {
+    .side--front {
+      &:before {
+        opacity: 0;
+      }
+    }
+  }
 
-.flip + .book-page .side--front:before {
-  opacity: 1;
-  width: 0;
-}
+  .text-content {
+    height: 100%;
+    padding: 8%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: relative;
+    z-index: 10;
+  }
 
-.book-page {
-  z-index: 1;
-}
-.notebook:after {
-  content: "";
-  position: absolute;
-  bottom: calc(-0.01em * var(--pages));
-  left: 0;
-  width: 100%;
-  height: 1em;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
-  border-radius: 50%;
-  z-index: -1;
-  background-size: 100%;
-  filter: blur(4px);
-  clip-path: inset(50% 0 -50% 0);
-  transition: 1s all ease;
-  opacity: 0;
-  background-position: 50%;
-  margin-bottom: -0.5em;
-}
-.notebook.open:after {
-    height: 1em;
-  opacity: 1;
-    background-size: 50%;
-  background-position: 100%;
-}
-
-
-.closed {
-//  width: 40vw;
+  .flip + .book-page .side--front:before {
+    opacity: 1;
+    width: 0;
+  }
 
   .book-page {
-//    margin-left: 25%;
+    z-index: 1;
   }
-}
+  /*
+  .notebook:after {
+    content: "";
+    position: absolute;
+    bottom: calc(-0.02em * var(--pages));
+    left: 0;
+    width: 100%;
+    height: 1em;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 50%;
+    z-index: -1;
+    background-size: 100%;
+    filter: blur(4px);
+    clip-path: inset(50% 0 -50% 0);
+    transition: 1s all ease;
+    opacity: 0;
+    background-position: 50%;
+    margin-bottom: -0.5em;
+  }
+  .notebook.open:after {
+      height: 1em;
+    opacity: 1;
+      background-size: 50%;
+    background-position: 100%;
+  }
+  */
 
 
-
-
-
-.intro {
+  .intro {
     width: 50%;
     float: left;
     height: 100%;
-    background: #eee;
     transition: 1s all ease;
-
-    font-family: "kettler-web";
     font-size: 1.3vw;
-    font-weight: bold;
-}
-.open {
-  .intro {
-    opacity: 0;
-    transform: scale(0.8);
+    font-family: $sans-serif;
   }
-}
+  .open {
+    .intro {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
 
 
-.size--landscape {
-  width: 92vw;
-  height: 40vw;
-}
-.size--portrait {
-  width: 78vw;
-  height: 46vw;
-}
-.size--horiz-photo {
-  width: 92vw;
-  height: 34vw;
-}
-.size--vert-photo {
-  width: 71vw;
-  height: 47vw;
-}
+  .size--landscape {
+    width: 92vw;
+    height: 40vw;
+  }
+  .size--portrait {
+    width: 78vw;
+    height: 46vw;
+  }
+  .size--horiz-photo {
+    width: 92vw;
+    height: 34vw;
+  }
+  .size--vert-photo {
+    width: 71vw;
+    height: 47vw;
+  }
 
-.book-page-1 .side.side--front img {
-    width: 100%;
-}
-
-
-button.prev {
-  position: fixed;
-  top: 50%;
-}
-button.next {
-  position: fixed;
-  top: 50%;
-  right: 0;
-}
-
-.shine {
-    position: absolute;
-    content: "";
-    height: 100%;
-    width: 4%;
-    background: linear-gradient(to right, transparent 0%, #fff 50%, transparent 100%);
-    top: 0;
-    left: 2%;
-    z-index: 1;
-    mix-blend-mode: overlay;
-    opacity: 0.6;
-}
+  .book-page-1 .side.side--front img {
+      width: 100%;
+  }
 
 
-.flip > .side {
-    border-top-right-radius: 0.4em;
-}
-.book-page:not(.flip) .side {
-    border-top-left-radius: 0.4em;
+  button.prev {
+    position: fixed;
+    top: 50%;
+  }
+  button.next {
+    position: fixed;
+    top: 50%;
+    right: 0;
+  }
+
+  .shine {
+      position: absolute;
+      content: "";
+      height: 100%;
+      width: 4%;
+      background: linear-gradient(to right, transparent 0%, #fff 50%, transparent 100%);
+      top: 0;
+      left: 2%;
+      z-index: 1;
+      mix-blend-mode: overlay;
+      opacity: 0.6;
+  }
+  .book-page .side--front {
+      border-top-left-radius: 0.4em;
+  }
+  .book-page .side--back {
+      border-top-right-radius: 0.4em;
+  }
+
+  .side--back {
+    &:before {
+      background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+  //    opacity: 0.4;
+  //    transition: 1s all ease;
+    }
+  }
+  .flip .side--back {
+    &:before {
+  //    opacity: 0;
+      animation-duration: 2s;
+      animation-name: page-dark-to-light;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  @keyframes page-dark-to-light {
+    0% {
+      background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+      opacity: 1;
+      width: 100%;
+    }
+    99% {
+      background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+      opacity: 0;
+      width: 100%;
+    }
+    100% {
+      background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+      opacity: 0;
+      width: 0%;
+    }
+  }
+
+  $book-shadow: 0 0.4em 0.4em #444;
+
+  .the-end {
+    box-shadow: $book-shadow;
+  }
+  .open {
+    .book-page.book-page-1 {
+      box-shadow: $book-shadow;
+    }
+  }
+  .page-number {
+      position: absolute;
+      bottom: 0;
+      background: #fff;
+      left: 50%;
+      z-index: 100;
+  }
 }

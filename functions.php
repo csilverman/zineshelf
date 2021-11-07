@@ -145,6 +145,7 @@ function zineshelf_scripts() {
 
 	wp_enqueue_script( 'zineshelf-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
 	wp_enqueue_script( 'zineshelf-pageflip', get_template_directory_uri() . '/js/pageflip.js', array('jquery'), _S_VERSION, true );
+	wp_enqueue_script( 'js-cookie', get_template_directory_uri() . '/js/js.cookie.js', array('jquery'), _S_VERSION, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -274,12 +275,12 @@ function wrap_pages( $pages ) {
 
   foreach( (array) $pages as $page ) {
 		if ($count % 2) {
-				$book .= '<div class="side side--back">'.$page.'</div>';
-				$book .= '</div><div class="book-page book-page-'.($page_number).'" style="--h: '.($page_number).'">';
+				$book .= '<div class="side side--back">'.$page.'<b class="page-number">'.$count.'</b></div>';
+				$book .= '</div><div class="book-page book-page-'.$page_number.'" style="--h: '.$page_number.'">';
 				$page_number++;
 		}
 		else {
-			$book .= '<div class="side side--front"><b class="shine"></b>'.$page.'</div>';
+			$book .= '<div class="side side--front"><b class="shine"></b>'.$page.'<b class="page-number">'.$count.'</b></div>';
 			/*
 				.shine is the result of a very strange bug I discovered where, if the .shine
 				element is a direct child of book-page and has both z-index:1 and mix-blend-mode:overlay,
@@ -315,7 +316,7 @@ function add_typekit($code) {
     "besley" => "<style> @import url('https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,400;0,800;1,400;1,800&display=swap'); </style>",
     "cutive-mono" => "<style> @import url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap'); </style>"
 	);
-	return $type_codes[$code].$code;
+	return $type_codes[$code];
 }
 
 // [bartag foo="foo-value"]

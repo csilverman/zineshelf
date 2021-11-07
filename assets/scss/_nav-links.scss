@@ -1,0 +1,41 @@
+.nav-links {
+  position: relative;
+  padding: 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+  background: #eee;
+  margin-top: 4em;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2em;
+    left: 0;
+  }
+  &:before {
+    @include jagged-bg(#fff, transparent, 2em, top);
+    top: 0;
+  }
+}
+
+.book-view {
+  button {
+    position: fixed;
+    height: 8em;
+    width: 4em;
+    top: 50%;
+  }
+  button.next {
+    right: 0;
+    border-top-left-radius: 4em;
+    border-bottom-left-radius: 4em;
+  }
+  button.prev {
+    left: 0;
+    border-top-right-radius: 4em;
+    border-bottom-right-radius: 4em;
+  }
+}

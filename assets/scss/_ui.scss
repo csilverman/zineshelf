@@ -10,24 +10,28 @@ fieldset {
     padding: 0 1rem;
   }
 }
-.view-tabs {
-  padding-left: 0;
-  margin: 0;
+.view-controls {
+  display: block;
+  width: 40rem;
+  margin: 0 auto;
+  padding: 1em;
+  text-align: center;
 
   --btn-color: #06f;
 
   li {
+    display: inline;
     list-style: none;
     padding: 0.4rem;
   }
-  input {
+  input[type="radio"] {
     position: absolute;
     width: 1px;
     opacity: 0;
 
     & ~ label {
       position: relative;
-      display: flex;
+      display: inline-flex;
       gap: 0.6rem;
       align-items: center;
 
@@ -41,6 +45,7 @@ fieldset {
         border-radius: 50%;
         border: 2px solid var(--btn-color);
         left: 0;
+        @include shadowblock(#0af, 3, box);
       }
     }
 
@@ -51,5 +56,57 @@ fieldset {
         }
       }
     }
+  }
+
+
+
+
+  input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    opacity: 0;
+
+    & ~ label {
+      position: relative;
+      display: inline-flex;
+      gap: 0.6rem;
+      align-items: center;
+
+      &:before {
+        content: "";
+        display: block;
+        //        position: absolute;
+        width: 2rem;
+        height: 2rem;
+        background: #fff;
+        border-radius: 0.4em;
+        border: 2px solid var(--btn-color);
+        left: 0;
+        @include shadowblock(#f00, 4, box);
+      }
+    }
+
+    &:checked {
+      & ~ label {
+        &:after {
+          font-size: 2rem;
+            content: "✕";
+            position: absolute;
+            width: calc(2rem + 4px);
+            height: calc(2rem + 4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            top: 3px;
+            left: 3px;
+        }
+      }
+    }
+  }
+
+  input:checked ~ label:before {
+    box-shadow: none;
+    transform: translate(3px, 3px);
   }
 }

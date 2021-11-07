@@ -1,18 +1,8 @@
-@mixin shadowblock($color, $depth) {
-  $shadow: null;
-  $comma: ', ';
-  @for $i from 1 through $depth {
-    @if $i == $depth {
-      $comma: '';
-    }
-    $shadow: $shadow + #{$i}px #{$i}px 0 var(--shad, $color) + unquote($comma);
-  }
-//  1px 1px 0 #f00, 2px 2px 0 #f00
-  text-shadow: $shadow;
-}
+$sans-serif: "Source Serif Pro";
+
 
 @import "_frameworks/_rfs.scss";
-
+@import "_mixins";
 @import "_sitewide";
 @import "_bookcover";
 @import "_flipbook";
@@ -22,10 +12,14 @@
 @import "_intro-page";
 @import "_ui";
 @import "_type";
+@import "_nav-links";
 
 @import "page-modules/_all";
+@import "_view-pagelist";
 
 @import "_site-nav";
 @import "_typesets";
+@import "_footer";
 @import "_page-template";
 @import "_masthead";
+@import "_bookpage-nav";

@@ -34,7 +34,6 @@
 				$all_kits = explode(',', $the_kits);
 				foreach( $all_kits as $kit ) {
 					echo add_typekit( $kit );
-					echo $kit;
 				}
 			}
 			else echo add_typekit($post->nb_type);
@@ -46,7 +45,7 @@
 </head>
 
 <?php
-$page_classes = '';
+$page_classes = 'book-view ';
 if( is_singular() ) $page_classes .= 'is-singular';
 ?>
 

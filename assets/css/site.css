@@ -1,10 +1,16 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Karla:wght@400;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital@0;1&display=swap");
 html {
   box-sizing: border-box;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
+}
+
+body {
+  margin: 0;
 }
 
 p {
@@ -113,36 +119,42 @@ html {
   --page-seam-color: #000;
 }
 
-div::-webkit-scrollbar {
-  width: 6px;
+.book-view {
+  /*
+  How this should work:
+
+  - The page number is the number of individual pages divided by two
+    since a physical "page" has two sides.
+
+  */
+  /*
+  .notebook:after {
+    content: "";
+    position: absolute;
+    bottom: calc(-0.02em * var(--pages));
+    left: 0;
+    width: 100%;
+    height: 1em;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
+    border-radius: 50%;
+    z-index: -1;
+    background-size: 100%;
+    filter: blur(4px);
+    clip-path: inset(50% 0 -50% 0);
+    transition: 1s all ease;
+    opacity: 0;
+    background-position: 50%;
+    margin-bottom: -0.5em;
+  }
+  .notebook.open:after {
+      height: 1em;
+    opacity: 1;
+      background-size: 50%;
+    background-position: 100%;
+  }
+  */
 }
-
-div {
-  scrollbar-width: thin;
-  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-}
-
-div::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-div::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  border-left: 3px solid var(--scrollbarBG, #06c);
-}
-
-p:last-child {
-  margin-bottom: 0;
-}
-
-/*
-How this should work:
-
-- The page number is the number of individual pages divided by two
-  since a physical "page" has two sides.
-
-*/
-.notebook {
+.book-view .notebook {
   -webkit-transform: perspective(100em);
           transform: perspective(100em);
   -webkit-transform-style: preserve-3d;
@@ -150,10 +162,26 @@ How this should work:
   position: relative;
   width: 80vw;
   height: 40vw;
-  margin: 10em auto 4em auto;
+  margin: 0 auto 4em auto;
 }
-
-.book-page {
+.book-view .notebook div::-webkit-scrollbar {
+  width: 6px;
+}
+.book-view .notebook div {
+  scrollbar-width: thin;
+  scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+.book-view .notebook div::-webkit-scrollbar-track {
+  background: transparent;
+}
+.book-view .notebook div::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-left: 3px solid var(--scrollbarBG, #06c);
+}
+.book-view .notebook p:last-child {
+  margin-bottom: 0;
+}
+.book-view .book-page {
   width: 50%;
   height: 100%;
   -webkit-transform-style: preserve-3d;
@@ -166,51 +194,48 @@ How this should work:
   -webkit-transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
           transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
 }
-.book-page.flip {
+.book-view .book-page.flip {
   -webkit-transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
           transform: rotateY(-179.9deg) translateZ(calc(-0.01em * var(--h))) translateY(calc( (0.03em * (var(--pages) - var(--h)))));
 }
-
-.the-end {
-  -webkit-transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
-          transform: translateZ(calc(-0.01em * var(--h))) translateY(calc(0.03em * var(--h)));
+.book-view .the-end {
+  -webkit-transform: translateZ(calc(-0.01em * (var(--pages) - 1))) translateY(calc(0.03em * var(--pages)));
+          transform: translateZ(calc(-0.01em * (var(--pages) - 1))) translateY(calc(0.03em * var(--pages)));
 }
-
-.book-page:nth-child(2n+2) .side {
-  border-color: rgba(0, 0, 0, 0.2);
+.book-view .book-page:nth-child(2n+2) .side {
+  border-color: #444;
 }
-
-.side {
+.book-view .side {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
   background: var(--page-bg-color);
   position: absolute;
   width: 100%;
   height: 100%;
-  border-bottom: 0.5px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 0.5px solid #888;
   top: 0;
   left: 0;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
 }
-.side:after {
+.book-view .side:after {
   content: "";
   position: absolute;
-  width: 4%;
+  width: 2%;
   height: 100%;
   background: linear-gradient(to right, var(--page-seam-color) 0%, rgba(0, 0, 0, 0) 100%);
   top: 0;
   left: 0;
   opacity: 1;
 }
-.side--back:after {
+.book-view .side--back:after {
   left: auto;
   right: 0;
   opacity: 1;
   -webkit-transform: scaleX(-1);
           transform: scaleX(-1);
 }
-.side:before {
+.book-view .side:before {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -219,24 +244,22 @@ How this should work:
   opacity: 0;
   transition: 1s all ease;
 }
-.side--front {
+.book-view .side--front {
   overflow: hidden;
 }
-.side--front:before {
+.book-view .side--front:before {
   opacity: 0.6;
   width: 160%;
 }
-.side--back {
+.book-view .side--back {
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);
   background: #eee;
 }
-
-.book-page-1 .side--front:before {
+.book-view .book-page-1 .side--front:before {
   opacity: 0;
 }
-
-.text-content {
+.book-view .text-content {
   height: 100%;
   padding: 8%;
   overflow-x: hidden;
@@ -244,97 +267,55 @@ How this should work:
   position: relative;
   z-index: 10;
 }
-
-.flip + .book-page .side--front:before {
+.book-view .flip + .book-page .side--front:before {
   opacity: 1;
   width: 0;
 }
-
-.book-page {
+.book-view .book-page {
   z-index: 1;
 }
-
-.notebook:after {
-  content: "";
-  position: absolute;
-  bottom: calc(-0.01em * var(--pages));
-  left: 0;
-  width: 100%;
-  height: 1em;
-  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 100%);
-  border-radius: 50%;
-  z-index: -1;
-  background-size: 100%;
-  -webkit-filter: blur(4px);
-          filter: blur(4px);
-  -webkit-clip-path: inset(50% 0 -50% 0);
-          clip-path: inset(50% 0 -50% 0);
-  transition: 1s all ease;
-  opacity: 0;
-  background-position: 50%;
-  margin-bottom: -0.5em;
-}
-
-.notebook.open:after {
-  height: 1em;
-  opacity: 1;
-  background-size: 50%;
-  background-position: 100%;
-}
-
-.intro {
+.book-view .intro {
   width: 50%;
   float: left;
   height: 100%;
-  background: #eee;
   transition: 1s all ease;
-  font-family: "kettler-web";
   font-size: 1.3vw;
-  font-weight: bold;
+  font-family: "Source Serif Pro";
 }
-
-.open .intro {
+.book-view .open .intro {
   opacity: 0;
   -webkit-transform: scale(0.8);
           transform: scale(0.8);
 }
-
-.size--landscape {
+.book-view .size--landscape {
   width: 92vw;
   height: 40vw;
 }
-
-.size--portrait {
+.book-view .size--portrait {
   width: 78vw;
   height: 46vw;
 }
-
-.size--horiz-photo {
+.book-view .size--horiz-photo {
   width: 92vw;
   height: 34vw;
 }
-
-.size--vert-photo {
+.book-view .size--vert-photo {
   width: 71vw;
   height: 47vw;
 }
-
-.book-page-1 .side.side--front img {
+.book-view .book-page-1 .side.side--front img {
   width: 100%;
 }
-
-button.prev {
+.book-view button.prev {
   position: fixed;
   top: 50%;
 }
-
-button.next {
+.book-view button.next {
   position: fixed;
   top: 50%;
   right: 0;
 }
-
-.shine {
+.book-view .shine {
   position: absolute;
   content: "";
   height: 100%;
@@ -346,17 +327,69 @@ button.next {
   mix-blend-mode: overlay;
   opacity: 0.6;
 }
-
-.flip > .side {
-  border-top-right-radius: 0.4em;
-}
-
-.book-page:not(.flip) .side {
+.book-view .book-page .side--front {
   border-top-left-radius: 0.4em;
 }
-
-.single-post .entry-content {
-  overflow: hidden;
+.book-view .book-page .side--back {
+  border-top-right-radius: 0.4em;
+}
+.book-view .side--back:before {
+  background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+}
+.book-view .flip .side--back:before {
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-name: page-dark-to-light;
+          animation-name: page-dark-to-light;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+@-webkit-keyframes page-dark-to-light {
+  0% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 1;
+    width: 100%;
+  }
+  99% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 0;
+    width: 100%;
+  }
+  100% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 0;
+    width: 0%;
+  }
+}
+@keyframes page-dark-to-light {
+  0% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 1;
+    width: 100%;
+  }
+  99% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 0;
+    width: 100%;
+  }
+  100% {
+    background: linear-gradient(to right, #000 0%, #000 50%, transparent 100%);
+    opacity: 0;
+    width: 0%;
+  }
+}
+.book-view .the-end {
+  box-shadow: 0 0.4em 0.4em #444;
+}
+.book-view .open .book-page.book-page-1 {
+  box-shadow: 0 0.4em 0.4em #444;
+}
+.book-view .page-number {
+  position: absolute;
+  bottom: 0;
+  background: #fff;
+  left: 50%;
+  z-index: 100;
 }
 
 body:not(.is-singular) .site-main {
@@ -422,29 +455,33 @@ fieldset legend {
   padding: 0 1rem;
 }
 
-.view-tabs {
-  padding-left: 0;
-  margin: 0;
+.view-controls {
+  display: block;
+  width: 40rem;
+  margin: 0 auto;
+  padding: 1em;
+  text-align: center;
   --btn-color: #06f;
 }
-.view-tabs li {
+.view-controls li {
+  display: inline;
   list-style: none;
   padding: 0.4rem;
 }
-.view-tabs input {
+.view-controls input[type=radio] {
   position: absolute;
   width: 1px;
   opacity: 0;
 }
-.view-tabs input ~ label {
+.view-controls input[type=radio] ~ label {
   position: relative;
-  display: -webkit-flex;
-  display: flex;
+  display: -webkit-inline-flex;
+  display: inline-flex;
   gap: 0.6rem;
   -webkit-align-items: center;
           align-items: center;
 }
-.view-tabs input ~ label:before {
+.view-controls input[type=radio] ~ label:before {
   content: "";
   display: block;
   width: 2rem;
@@ -453,9 +490,55 @@ fieldset legend {
   border-radius: 50%;
   border: 2px solid var(--btn-color);
   left: 0;
+  box-shadow: 1px 1px 0 var(--shad, #0af), 2px 2px 0 var(--shad, #0af), 3px 3px 0 var(--shad, #0af);
 }
-.view-tabs input:checked ~ label:before {
+.view-controls input[type=radio]:checked ~ label:before {
   background: radial-gradient(ellipse at center, var(--btn-color) 49%, #fff 52%, #fff 100%);
+}
+.view-controls input[type=checkbox] {
+  position: absolute;
+  width: 1px;
+  opacity: 0;
+}
+.view-controls input[type=checkbox] ~ label {
+  position: relative;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  gap: 0.6rem;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.view-controls input[type=checkbox] ~ label:before {
+  content: "";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  background: #fff;
+  border-radius: 0.4em;
+  border: 2px solid var(--btn-color);
+  left: 0;
+  box-shadow: 1px 1px 0 var(--shad, #f00), 2px 2px 0 var(--shad, #f00), 3px 3px 0 var(--shad, #f00), 4px 4px 0 var(--shad, #f00);
+}
+.view-controls input[type=checkbox]:checked ~ label:after {
+  font-size: 2rem;
+  content: "✕";
+  position: absolute;
+  width: calc(2rem + 4px);
+  height: calc(2rem + 4px);
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  background: none;
+  top: 3px;
+  left: 3px;
+}
+.view-controls input:checked ~ label:before {
+  box-shadow: none;
+  -webkit-transform: translate(3px, 3px);
+          transform: translate(3px, 3px);
 }
 
 body {
@@ -484,6 +567,51 @@ body {
   .has-large-font-size {
     font-size: 2rem;
   }
+}
+
+.nav-links {
+  position: relative;
+  padding: 6vw;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  gap: 2em;
+  background: #eee;
+  margin-top: 4em;
+}
+.nav-links:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2em;
+  left: 0;
+}
+.nav-links:before {
+  background: conic-gradient(#fff 45deg, transparent 45deg 315deg, #fff 200deg);
+  background-size: 2em;
+  background-repeat: repeat-x;
+  height: 2em;
+  top: 0;
+}
+
+.book-view button {
+  position: fixed;
+  height: 8em;
+  width: 4em;
+  top: 50%;
+}
+.book-view button.next {
+  right: 0;
+  border-top-left-radius: 4em;
+  border-bottom-left-radius: 4em;
+}
+.book-view button.prev {
+  left: 0;
+  border-top-right-radius: 4em;
+  border-bottom-right-radius: 4em;
 }
 
 .p-1 {
@@ -517,6 +645,27 @@ body {
   width: 70%;
 }
 
+.wp-block-image figcaption {
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #aaa;
+  padding: 1vw;
+}
+
+.list-view .side {
+  max-width: 40rem;
+  margin: 2rem auto;
+  box-shadow: 0 1em 1em #aaa;
+}
+.list-view img {
+  width: 100%;
+  display: block;
+  line-height: 0;
+}
+
 .menu-toggle {
   display: none;
 }
@@ -530,6 +679,25 @@ body {
   font-weight: 800;
   text-decoration: none;
   font-size: 1.2em;
+}
+
+.site-footer {
+  padding: 3em 3em 6em 3em;
+  text-align: center;
+  background: #aaa;
+  position: relative;
+}
+.site-footer:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2em;
+  left: 0;
+  top: -1em;
+  background: conic-gradient(transparent 135deg, #aaa 135deg 180deg, #aaa 180deg 225deg, transparent 225deg);
+  background-size: 1em;
+  background-repeat: repeat-x;
+  height: 1em;
 }
 
 .page .site-main {
@@ -548,7 +716,6 @@ body {
   display: block;
   line-height: 0.86;
   padding: 3rem;
-  position: fixed;
   text-shadow: 1px 1px 0 var(--shad, #aaa), 2px 2px 0 var(--shad, #aaa), 3px 3px 0 var(--shad, #aaa), 4px 4px 0 var(--shad, #aaa);
   transition: 0.4s all ease;
 }
@@ -564,4 +731,11 @@ body {
   color: #aaa;
   -webkit-transform: translate(4px, 4px);
           transform: translate(4px, 4px);
+}
+
+#bookpage-nav button {
+  background: #06c;
+  color: #fff;
+  font-weight: bold;
+  border: none;
 }
