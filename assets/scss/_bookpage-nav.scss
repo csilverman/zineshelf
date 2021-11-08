@@ -1,8 +1,16 @@
-#bookpage-nav {
-  button {
-    background: #06c;
-    color: #fff;
-    font-weight: bold;
-    border: none;
+.book-view {
+  #bookpage-nav {
+    button {
+      background: #06c;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      transition: 0.6s all ease;
+    }
+    .prev {
+      .book-is-closed & {
+        opacity: 0;
+      }
+    }
   }
 }

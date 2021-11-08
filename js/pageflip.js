@@ -17,9 +17,19 @@ jQuery( ".book-page" ).click(function() {
 */
 
 function flipNext() {
+  if( !jQuery( ".book-page-1" ).hasClass( "flip" ) ) {
+    jQuery( ".notebook" ).removeClass( "closed" ).addClass( "open" );
+    jQuery( "body" ).removeClass( "book-is-closed" ).addClass( "book-is-open" );
+  }
+
   jQuery( '.notebook .book-page:not(.flip):first' ).addClass( 'flip' );
 }
 function flipPrev() {
+  if( jQuery( ".flip" ).length == 1 ) {
+    jQuery( ".notebook" ).removeClass( "open" ).addClass( "closed" );
+    jQuery( "body" ).removeClass( "book-is-open" ).addClass( "book-is-closed" );
+  }
+
   jQuery( '.notebook .book-page.flip:last' ).removeClass( 'flip' );
 }
 
@@ -55,17 +65,9 @@ jQuery(document).keydown(
   function(e)
   {
     if (e.keyCode == 39) {
-      if( !jQuery( ".book-page-1" ).hasClass( "flip" ) ) {
-        jQuery( ".notebook" ).removeClass( "closed" ).addClass( "open" );
-      }
-
       flipNext();
     }
     if (e.keyCode == 37) {
-      if( jQuery( ".flip" ).length == 1 ) {
-        jQuery( ".notebook" ).removeClass( "open" ).addClass( "closed" );
-      }
-
       flipPrev();
     }
   }

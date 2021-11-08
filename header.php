@@ -45,8 +45,9 @@
 </head>
 
 <?php
-$page_classes = 'book-view ';
-if( is_singular() ) $page_classes .= 'is-singular';
+$page_classes = '';
+if( is_singular() ) $page_classes .= ' '.'is-singular';
+if( is_single() ) $page_classes .= ' '.'book-view book-is-closed';
 ?>
 
 <body <?php body_class( $page_classes ); ?>>
