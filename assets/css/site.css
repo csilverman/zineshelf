@@ -221,9 +221,9 @@ html {
 .book-view .side:after {
   content: "";
   position: absolute;
-  width: 2%;
+  width: var(--gutter-width, 2%);
   height: 100%;
-  background: linear-gradient(to right, var(--page-seam-color) 0%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(to right, var(--gutter-color) 0%, rgba(0, 0, 0, 0) 100%);
   top: 0;
   left: 0;
   opacity: 1;
@@ -306,23 +306,14 @@ html {
 .book-view .book-page-1 .side.side--front img {
   width: 100%;
 }
-.book-view button.prev {
-  position: fixed;
-  top: 50%;
-}
-.book-view button.next {
-  position: fixed;
-  top: 50%;
-  right: 0;
-}
 .book-view .shine {
   position: absolute;
   content: "";
   height: 100%;
-  width: 4%;
-  background: linear-gradient(to right, transparent 0%, #fff 50%, transparent 100%);
+  width: var(--gutter-highlight-width, 4%);
+  background: linear-gradient(to right, transparent 0%, var(--gutter-highlight, #fff) 50%, transparent 100%);
   top: 0;
-  left: 2%;
+  left: var(--gutter-highlight-placement, 2%);
   z-index: 1;
   mix-blend-mode: overlay;
   opacity: 0.6;
@@ -446,13 +437,37 @@ body:not(.is-singular) .site-main .book--square {
 
 /* View controller
   ================ */
-fieldset {
+@-webkit-keyframes open {
+  0% {
+    opacity: 0;
+    margin-left: -20px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+@keyframes open {
+  0% {
+    opacity: 0;
+    margin-left: -20px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0px;
+  }
+}
+input fieldset {
   border-radius: 0.6rem;
   border: 2px solid #aaa;
   padding: 1rem 1.4rem 1.6rem;
 }
-fieldset legend {
+input fieldset legend {
   padding: 0 1rem;
+}
+
+svg#icon-cog {
+  width: 2rem;
 }
 
 .view-controls {
@@ -461,7 +476,32 @@ fieldset legend {
   margin: 0 auto;
   padding: 1em;
   text-align: center;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 20em);
+  z-index: 10;
+  transition: 1s all ease;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  height: 0;
   --btn-color: #06f;
+}
+.view-controls[open] {
+  background: #fff;
+  box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  height: 10em;
+}
+.view-controls[open] summary ~ * {
+  -webkit-animation: open 0.5s ease-in-out;
+          animation: open 0.5s ease-in-out;
+}
+.view-controls summary {
+  list-style: none;
+}
+.view-controls summary::marker, .view-controls summary::-webkit-details-marker {
+  display: none;
 }
 .view-controls li {
   display: inline;
@@ -480,8 +520,10 @@ fieldset legend {
   gap: 0.6rem;
   -webkit-align-items: center;
           align-items: center;
+  transition: 0.2s all ease;
 }
 .view-controls input[type=radio] ~ label:before {
+  transition: 0.2s all ease;
   content: "";
   display: block;
   width: 2rem;
@@ -580,7 +622,7 @@ body {
           justify-content: center;
   gap: 2em;
   background: #eee;
-  margin-top: 4em;
+  margin-top: 8em;
 }
 .nav-links:before {
   content: "";
@@ -595,23 +637,6 @@ body {
   background-repeat: repeat-x;
   height: 2em;
   top: 0;
-}
-
-.book-view button {
-  position: fixed;
-  height: 8em;
-  width: 4em;
-  top: 50%;
-}
-.book-view button.next {
-  right: 0;
-  border-top-left-radius: 4em;
-  border-bottom-left-radius: 4em;
-}
-.book-view button.prev {
-  left: 0;
-  border-top-right-radius: 4em;
-  border-bottom-right-radius: 4em;
 }
 
 .p-1 {
@@ -655,8 +680,29 @@ body {
   padding: 1vw;
 }
 
+.list-view {
+  /*	Sets up a media query. This expects that all of a project's breakpoints will
+  	    be stored in a map named $breakpoints, as follows:
+  $breakpoints: (
+  	"small": 30em,
+  	"medium": 50em,
+  	"large": 70em
+  );
+  	*/
+}
 .list-view #bookpage-nav {
   display: none;
+}
+@media screen and (min-width: 50em) {
+  .list-view button.prev {
+    position: fixed;
+    top: 50%;
+  }
+  .list-view button.next {
+    position: fixed;
+    top: 50%;
+    right: 0;
+  }
 }
 .list-view .side {
   max-width: 40rem;
@@ -739,13 +785,50 @@ body {
           transform: translate(4px, 4px);
 }
 
+.book-is-closed .prev {
+  opacity: 0;
+}
+
+.book-view {
+  /*	Sets up a media query. This expects that all of a project's breakpoints will
+  	    be stored in a map named $breakpoints, as follows:
+  $breakpoints: (
+  	"small": 30em,
+  	"medium": 50em,
+  	"large": 70em
+  );
+  	*/
+}
+.book-view #bookpage-nav {
+  text-align: center;
+}
 .book-view #bookpage-nav button {
-  background: #06c;
-  color: #fff;
   font-weight: bold;
   border: none;
   transition: 0.6s all ease;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
 }
-.book-is-closed .book-view #bookpage-nav .prev {
-  opacity: 0;
+.book-view #bookpage-nav button:hover {
+  background: #06c;
+  color: #fff;
+}
+@media screen and (min-width: 50em) {
+  .book-view button {
+    position: fixed;
+    height: 8em;
+    width: 4em;
+    top: 50%;
+  }
+  .book-view button.next {
+    right: 0;
+    border-top-left-radius: 4em;
+    border-bottom-left-radius: 4em;
+  }
+  .book-view button.prev {
+    left: 0;
+    border-top-right-radius: 4em;
+    border-bottom-right-radius: 4em;
+  }
 }

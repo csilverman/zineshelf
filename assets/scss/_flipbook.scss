@@ -88,9 +88,9 @@ html {
       //  the page seam
       content: '';
       position: absolute;
-      width: 2%;
+      width: var(--gutter-width, 2%);
       height: 100%;
-        background: linear-gradient(to right, var(--page-seam-color) 0%,rgba(0,0,0,0) 100%);
+        background: linear-gradient(to right, var(--gutter-color) 0%,rgba(0,0,0,0) 100%);
       top: 0;
       left: 0;
       opacity: 1;
@@ -216,26 +216,14 @@ html {
   .book-page-1 .side.side--front img {
       width: 100%;
   }
-
-
-  button.prev {
-    position: fixed;
-    top: 50%;
-  }
-  button.next {
-    position: fixed;
-    top: 50%;
-    right: 0;
-  }
-
   .shine {
       position: absolute;
       content: "";
       height: 100%;
-      width: 4%;
-      background: linear-gradient(to right, transparent 0%, #fff 50%, transparent 100%);
+      width: var(--gutter-highlight-width, 4%);
+      background: linear-gradient(to right, transparent 0%, var(--gutter-highlight, #fff) 50%, transparent 100%);
       top: 0;
-      left: 2%;
+      left: var(--gutter-highlight-placement, 2%);
       z-index: 1;
       mix-blend-mode: overlay;
       opacity: 0.6;

@@ -269,7 +269,7 @@ function wrap_pages( $pages ) {
   // Number of pages per chunk
 
 	$count = 1;
-	$book = '<style> :root { --pages: ' . $number_of_pages . '; } </style><div class="book-page book-page-1" style="--h: 1"><div class="side side--front"><img src="'.$cover_url[0].'" /></div>';
+	$book = '<style> :root { --pages: ' . $number_of_pages . '; ' . $post->nb_vars . ' } </style><div class="book-page book-page-1" style="--h: 1"><div class="side side--front"><img src="'.$cover_url[0].'" /></div>';
 
 	$page_number = 2;
 
